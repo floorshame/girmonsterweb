@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://mcapi.us/scripts/minecraft.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    
+    <title>gir.monster - mc</title>
+</head>
+<body>
+    <div class="navbar_holder">
+        <div class="navbar">
+            <div class="navbar_top">
+                <p class="navbar_logo">gir.monster</p>
+            </div>
+            <div class="navbar_bottom">
+                <button class="navbar_button" onclick="location.href='https://wiki.gir.monster'">wiki</button>
+                <button class="navbar_button" onclick="location.href='https://map.gir.monster'">map</button>
+                <button class="navbar_button" onclick="location.href='http://discord.gir.monster'">discord</button>
+
+            </div>
+        </div>    
+    </div>
+
+    <div class="page">
+        <div class="box">
+            <div class="box_header">
+                server info
+            </div>
+
+            <div class="box_stats">
+                <div class="stats_left">
+                    <img id="server_image">
+                </div>
+                <div class="stats_right">
+                    <p class="box_stat">ip: <span style="color: var(--accent_color)">play.gir.monster</span></p>    
+                    <p class="box_stat">online: <span style="color: var(--accent_color)" id="online">0</span>/<span style="color: var(--accent_color)" id="online_max">0</span></p>
+                    <p class="box_stat">version: <span style="color: var(--accent_color)" id="version">0.0.0.0</span>+</p>    
+                </div>
+            </div>
+        </div>    
+    </div>
+</body>
+</html>
+
+<script>
+MinecraftAPI.getServerStatus('play.gir.monster', {
+port: 25565 // optional, only if you need a custom port
+}, function (err, status) {
+    if (err) {
+        console.log("error loading server status")
+    }
+    let players_online = status["players"]["now"]
+    let players_max = status["players"]["max"]
+    let version = status["server"]["name"]
+    let image = status["favicon"]
+
+    version = version.replace("Paper ", "")
+
+    document.getElementById("online").innerHTML = players_online;
+    document.getElementById("online_max").innerHTML = players_max;
+    document.getElementById("version").innerHTML = version;
+    document.getElementById("server_image").src = image;
+
+    console.log(status)
+});
+
+</script>
